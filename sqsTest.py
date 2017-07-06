@@ -3,8 +3,6 @@ import os
 import glob
 import time
 
-sqs = boto3.resource('sqs', region_name='us-east-1')
-
 def sent_to_q(message):
     sqs = boto3.resource('sqs')
     queue = sqs.get_queue_by_name(QueueName='Temperature')
