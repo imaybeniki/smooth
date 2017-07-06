@@ -3,14 +3,6 @@ import os
 import glob
 import time
 from boto3.session import Session
-
-conf = { 
-   "sqs-access-key": "AKIAJUYQR43YRT6APTJQ", 
-   "sqs-secret-key": "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", 
-   "sqs-queue-name": "", 
-   "sqs-region": "us-east-1", 
-   "sqs-path": "sqssend" 
- } 
  
 # Create the Boto3 Session
 session = Session(
