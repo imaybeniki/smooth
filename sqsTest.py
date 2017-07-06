@@ -3,8 +3,7 @@ import os
 import glob
 import time
 
-sqs = boto3.resource('sqs')
-kms = boto3.client('kms', region_name='us-east-1')
+sqs = boto3.resource('sqs', region_name='us-east-1')
 
 def sent_to_q(message):
     sqs = boto3.resource('sqs')
