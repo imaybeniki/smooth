@@ -1,17 +1,22 @@
 import boto3
-
-sqs = boto3.client('sqs', region_name="us-east-1",
-            aws_access_key_id='AKIAJUYQR43YRT6APTJQ',
-            aws_secret_access_key='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'
-        )
-queue_url = 'https://sqs.us-east-1.amazonaws.com/258476513244/Temperature'
-
 import os
 import glob
 import time
 
-queue = sqs.get_queue_by_name(QueueName='Temperature')
-response = queue.send_message(MessageBody='world')
+#Connect to a session
+session = Session(aws_access_key_id='AKIAJUYQR43YRT6APTJQ', aws_secret_access_key='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')
+
+#Connect to a resource
+sqs= session.resource('sqs')
+
+queue = sqs.get_queue_by_name(QueueName=Temperature)
+print(queue.url)
+
+# Create a new message
+print 'creating new message'
+toWrite = 'hello world'
+response = queue.send_message(MessageBody=toWrite)
+print(response.get('MessageId'))
 
 os.system('modprobe w1-gpio')
 os.system('modprobe w1-therm')
@@ -38,13 +43,6 @@ def read_temp():
       temp_f = temp_c * 9.0 / 5.0 + 32.0
       return temp_c, temp_f
 
-response = sqs.send_message(
-    QueueUrl=queue_url,
-    DelaySeconds=10,
-    MessageBody=('' + read_temp())
-)
-
 while True:
-   print(response['MessageId'])
    print(read_temp())
    time.sleep(1)
