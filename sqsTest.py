@@ -3,6 +3,15 @@ import os
 import glob
 import time
 
+conf = { 
+   "sqs-access-key": "AKIAJUYQR43YRT6APTJQ", 
+   "sqs-secret-key": "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", 
+   "sqs-queue-name": "", 
+   "sqs-region": "us-east-1", 
+   "sqs-path": "sqssend" 
+ } 
+
+
 def sent_to_q(message):
     sqs = boto3.resource('sqs')
     queue = sqs.get_queue_by_name(QueueName='Temperature')
