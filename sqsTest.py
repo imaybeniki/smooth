@@ -35,5 +35,5 @@ def read_temp():
 
 while True:
    print(read_temp())
-   sent_to_q('' + read_temp())
+   sent_to_q(read_temp())
    time.sleep(1)
