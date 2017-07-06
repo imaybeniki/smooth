@@ -6,17 +6,10 @@ import time
 #Connect to a session
 session = Session(aws_access_key_id='AKIAJUYQR43YRT6APTJQ', aws_secret_access_key='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')
 
-#Connect to a resource
-sqs= session.resource('sqs')
-
-queue = sqs.get_queue_by_name(QueueName=Temperature)
-print(queue.url)
-
-# Create a new message
-print 'creating new message'
-toWrite = 'hello world'
-response = queue.send_message(MessageBody=toWrite)
-print(response.get('MessageId'))
+def sent_to_q(message):
+    sqs = boto3.resource('sqs')
+    queue = sqs.get_queue_by_name(QueueName='Temperature')
+    response = queue.send_message(MessageBody = message)
 
 os.system('modprobe w1-gpio')
 os.system('modprobe w1-therm')
@@ -45,4 +38,5 @@ def read_temp():
 
 while True:
    print(read_temp())
+   sent_to_q('' + read_temp())
    time.sleep(1)
