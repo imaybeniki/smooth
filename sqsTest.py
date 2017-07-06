@@ -16,11 +16,11 @@ client = session.client('sqs')
 response = client.get_queue_url(
     QueueName='Temperature' # Or the name of your SQS queue
 )
-url = response['https://sqs.us-east-1.amazonaws.com/258476513244/Temperature']
+#url = response['https://sqs.us-east-1.amazonaws.com/258476513244/Temperature']
 
 message = 'Hello world!'
 response = client.send_message(
-    QueueUrl=url,
+    QueueUrl='https://sqs.us-east-1.amazonaws.com/258476513244/Temperature',
     MessageBody=message,
     DelaySeconds=0,
 )
