@@ -3,9 +3,6 @@ import os
 import glob
 import time
 
-#Connect to a session
-session = Session(aws_access_key_id='AKIAJUYQR43YRT6APTJQ', aws_secret_access_key='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')
-
 def sent_to_q(message):
     sqs = boto3.resource('sqs')
     queue = sqs.get_queue_by_name(QueueName='Temperature')
