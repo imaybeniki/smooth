@@ -1,22 +1,17 @@
-conf = {
-   "sqs-access-key": "AKIAJUYQR43YRT6APTJQ",
-   "sqs-secret-key": "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",
-   "sqs-queue -name": "Temperature",
-   "sqs-region": "us-east-1",
-   "sqs-path": "sqssend"
-}
+import boto3
 
-import boto.sqs
+sqs = boto3.client('sqs', region_name="us-east-1",
+            aws_access_key_id='AKIAJUYQR43YRT6APTJQ',
+            aws_secret_access_key='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'
+        )
+queue_url = 'https://sqs.us-east-1.amazonaws.com/258476513244/Temperature'
+
 import os
 import glob
 import time
 
-conn = boto.sqs.connect_to_region(conf.get('sqs-region'),
-                                  aws_access_key_id = conf.get('sqs-access-key'),
-                                  aws_secret_access_key = conf.get('sqs-secret-key')
-                                  )
-q = conn.create_queue(conf.get('sqs-queue-name'))
-from boto.sqs.message import RawMessage
+queue = sqs.get_queue_by_name(QueueName='Temperature')
+response = queue.send_message(MessageBody='world')
 
 os.system('modprobe w1-gpio')
 os.system('modprobe w1-therm')
@@ -43,7 +38,13 @@ def read_temp():
       temp_f = temp_c * 9.0 / 5.0 + 32.0
       return temp_c, temp_f
 
+response = sqs.send_message(
+    QueueUrl=queue_url,
+    DelaySeconds=10,
+    MessageBody=('' + read_temp())
+)
+
 while True:
-   q.write(read_temp())
+   print(response['MessageId'])
    print(read_temp())
    time.sleep(1)
