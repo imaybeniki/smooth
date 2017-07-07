@@ -17,10 +17,11 @@ response = client.get_queue_url(
 )
 
 while True:
-    message = client.receive_message(
-    QueueUrl='https://sqs.us-east-1.amazonaws.com/258476513244/Temperature'
+   message = client.receive_message(
+   QueueUrl='https://sqs.us-east-1.amazonaws.com/258476513244/Temperature'
    )
-   print(message)
+   parsed_json = json.loads(message)
+   print(parsed_json['Body'])
    time.sleep(5)
    
    
