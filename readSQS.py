@@ -15,9 +15,8 @@ response = client.get_queue_url(
     QueueName='Temperature' 
 )
 
-
 while True:
-   response = sqs.receive_message(
+   response1 = client.receive_message(
     QueueUrl='https://sqs.us-east-1.amazonaws.com/258476513244/Temperature',
     AttributeNames=[
         'SentTimestamp'
@@ -29,7 +28,7 @@ while True:
     VisibilityTimeout=0,
     WaitTimeSeconds=0
 	)
-   message = response['Messages'][0]
+   message = response1['Messages'][0]
    print(message)
    time.sleep(5)
    
