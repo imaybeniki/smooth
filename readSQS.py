@@ -21,7 +21,7 @@ while True:
    QueueUrl='https://sqs.us-east-1.amazonaws.com/258476513244/Temperature'
    )
    parsed_json = json.loads(message)
-   print(parsed_json['Body'])
+   print(type(message))
    time.sleep(5)
    
    
