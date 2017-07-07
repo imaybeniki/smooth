@@ -1,6 +1,7 @@
 import boto3
 import time
 from boto3.session import Session
+import json
  
 # Create the Boto3 Session
 session = Session(
@@ -16,19 +17,9 @@ response = client.get_queue_url(
 )
 
 while True:
-   response1 = client.receive_message(
-    QueueUrl='https://sqs.us-east-1.amazonaws.com/258476513244/Temperature',
-    AttributeNames=[
-        'SentTimestamp'
-    ],
-    MaxNumberOfMessages=1,
-    MessageAttributeNames=[
-        'All'
-    ],
-    VisibilityTimeout=0,
-    WaitTimeSeconds=0
-	)
-   message = response1['Messages'][0]
+    message = client.receive_message(
+    QueueUrl='https://sqs.us-east-1.amazonaws.com/258476513244/Temperature'
+   )
    print(message)
    time.sleep(5)
    
