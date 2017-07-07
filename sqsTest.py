@@ -14,15 +14,7 @@ client = session.client('sqs')
 
 # Get the Queue URL
 response = client.get_queue_url(
-    QueueName='Temperature' # Or the name of your SQS queue
-)
-#url = response['https://sqs.us-east-1.amazonaws.com/258476513244/Temperature']
-
-message = 'Hello world!'
-response = client.send_message(
-    QueueUrl='https://sqs.us-east-1.amazonaws.com/258476513244/Temperature',
-    MessageBody=message,
-    DelaySeconds=0,
+    QueueName='Temperature' 
 )
 
 os.system('modprobe w1-gpio')
@@ -47,9 +39,21 @@ def read_temp():
    if equals_pos != -1:
       temp_string = lines[1][equals_pos+2:]
       temp_c = float(temp_string) / 1000.0
-      temp_f = temp_c * 9.0 / 5.0 + 32.0
-      return temp_c, temp_f
+      return temp_c
+
+def temp_far():
+	temp_f = read_temp() * 9.0 / 5.0 + 32.0
+	return temp_f
 
 while True:
-   print(read_temp())
-   time.sleep(1)
+   print('C: ' + read_temp() + 'F: ' + temp_far())
+   message = 'C: ' + read_temp() + 'F: ' + temp_far()
+   response = client.send_message(
+    QueueUrl='https://sqs.us-east-1.amazonaws.com/258476513244/Temperature',
+    MessageBody=message,
+    DelaySeconds=0,
+   )
+   print("Sent to AWS SQS")
+   time.sleep(5)
+   
+   
