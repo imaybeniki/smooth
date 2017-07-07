@@ -17,11 +17,10 @@ response = client.get_queue_url(
 
 
 while True:
-   response = client.receive_message(
-    QueueUrl='https://sqs.us-east-1.amazonaws.com/258476513244/Temperature',
-    DelaySeconds=0,
+   temp = client.receive_message(
+    QueueUrl='https://sqs.us-east-1.amazonaws.com/258476513244/Temperature'
    )
-   print(response)
+   print(temp)
    time.sleep(5)
    
    
