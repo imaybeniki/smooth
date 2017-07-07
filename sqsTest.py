@@ -39,14 +39,14 @@ def read_temp():
    if equals_pos != -1:
       temp_string = lines[1][equals_pos+2:]
       temp_c = float(temp_string) / 1000.0
-      return (str) temp_c
+      return temp_c
 
 def temp_far():
 	temp_f = read_temp() * 9.0 / 5.0 + 32.0
-	return (str) temp_f
+	return temp_f
 
 while True:
-   print('C: ' + read_temp() + 'F: ' + temp_far())
+   print('C: ' + str(read_temp()) + 'F: ' + str(temp_far()))
    message = 'C: ' + read_temp() + 'F: ' + temp_far()
    response = client.send_message(
     QueueUrl='https://sqs.us-east-1.amazonaws.com/258476513244/Temperature',
