@@ -46,8 +46,8 @@ def temp_far():
 	return temp_f
 
 while True:
-   print('C: ' + str(read_temp()) + 'F: ' + str(temp_far()))
-   message = 'C: ' + read_temp() + 'F: ' + temp_far()
+   print('C: ' + str(read_temp()) + ' F: ' + str(temp_far()))
+   message = 'C: ' + str(read_temp()) + ' F: ' + str(temp_far())
    response = client.send_message(
     QueueUrl='https://sqs.us-east-1.amazonaws.com/258476513244/Temperature',
     MessageBody=message,
