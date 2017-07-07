@@ -39,11 +39,11 @@ def read_temp():
    if equals_pos != -1:
       temp_string = lines[1][equals_pos+2:]
       temp_c = float(temp_string) / 1000.0
-      return temp_c
+      return (str) temp_c
 
 def temp_far():
 	temp_f = read_temp() * 9.0 / 5.0 + 32.0
-	return temp_f
+	return (str) temp_f
 
 while True:
    print('C: ' + read_temp() + 'F: ' + temp_far())
